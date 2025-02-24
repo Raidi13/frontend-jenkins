@@ -45,10 +45,10 @@ pipeline {
             steps {
                 withAWS(region: 'us-east-1', credentials: "aws-credentials")
                     sh """
-                        aws eks update -kubecofig --region ${ region }--name ${ project} --${environment}
+                        aws eks update-kubecofig --region ${ region } --name ${ project}-${environment}
                         cd helm
                         sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
-                        helm upgrade --install ${component} -n ${project} -f values -${environment}.yaml .
+                        helm upgrade --install ${component} -n ${project} -f values-${environment}.yaml .
                     """
             }
 
